@@ -1,0 +1,20 @@
+plugins {
+	id 'java'
+	id 'application'
+}
+
+mainClassName  = "jdraw.JDraw"
+
+repositories {
+	jcenter()
+}
+
+sourceCompatibility = 11
+targetCompatibility = 11
+compileJava.options.encoding = 'UTF-8'
+compileTestJava.options.encoding = 'UTF-8'
+
+dependencies {
+	implementation 'org.springframework:spring-context:4.3.19.RELEASE'
+	implementation 'log4j:log4j:1.2.17'
+}
