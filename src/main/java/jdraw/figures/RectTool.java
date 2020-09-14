@@ -30,6 +30,12 @@ public class RectTool extends AbstractDrawTool<Rect>/*implements DrawTool*/ {
 		
 	}
 
+	@Override
+	public AbstractFigure createFigure(int x, int y, int w, int h) {
+		// TOD Auto-generated method stub
+		return new Rect(x, y, w, h);
+	}
+
 	
 
 }

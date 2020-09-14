@@ -11,6 +11,7 @@ import jdraw.framework.Figure;
 import jdraw.framework.FigureEvent;
 import jdraw.framework.FigureListener;
 
+
 public abstract class AbstractFigure implements Figure {
 
     /** Use the java.awt.Rectangle in order to save/reuse code. */
@@ -31,6 +32,7 @@ public abstract class AbstractFigure implements Figure {
 	}
 
 	
+
 
 	
 
@@ -79,7 +81,7 @@ public abstract class AbstractFigure implements Figure {
 
 	@Override
 	public Figure clone() {
-		return null;
+		return null;	
 	}
 	
 	protected void propagateFigureEvent() {

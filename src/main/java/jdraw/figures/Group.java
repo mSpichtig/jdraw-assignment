@@ -3,22 +3,35 @@ package jdraw.figures;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.Stream;
 
 import jdraw.framework.Figure;
+import jdraw.framework.FigureEvent;
 import jdraw.framework.FigureListener;
 
 public class Group implements Figure, jdraw.framework.FigureGroup {
 
     List<Figure> parts;
 
+   /** Use the java.awt.Rectangle in order to save/reuse code. */
+	private final Rectangle rectangle;
+
     /** list of listeners. */
     private final List<FigureListener> listeners = new CopyOnWriteArrayList<>();
 
     public Group(List<Figure> parts) {
         this.parts = parts;
+        this.rectangle = new Rectangle(0,0,0,0);
+    }
+
+    @Override
+    public Group clone() {
+        List<Figure> f = new ArrayList<>();
+        for (Figure ff : parts) f.add(ff);
+        return new Group(f);
     }
 
     @Override
@@ -53,8 +66,17 @@ public class Group implements Figure, jdraw.framework.FigureGroup {
     @Override
     public void setBounds(Point origin, Point corner) {
         // TOD Auto-generated method stub
-
+        rectangle.setFrameFromDiagonal(origin, corner);
+		propagateFigureEvent();
     }
+
+    	
+	protected void propagateFigureEvent() {
+		FigureEvent fe = new FigureEvent(this);
+		for (FigureListener listener : listeners) {
+			listener.figureChanged(fe);
+		}
+	}
 
     @Override
     public Rectangle getBounds() {
@@ -80,11 +102,7 @@ public class Group implements Figure, jdraw.framework.FigureGroup {
         listeners.remove(listener);
     }
 
-    @Override
-    public Figure clone() {
-        // TOD Auto-generated method stub
-        return null;
-    }
+
 
     @Override
     public Stream<Figure> getFigureParts() {

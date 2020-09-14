@@ -104,7 +104,7 @@ public abstract class AbstractDrawTool<T extends AbstractFigure> implements Draw
 		}
 		setAnchor( new Point(x, y));
 		AbstractFigure a;
-		switch(type) {
+		/*switch(type) {
 			case "Rect":
 			a = new Rect(x,y,0,0);break;
 			case "Line":
@@ -113,12 +113,14 @@ public abstract class AbstractDrawTool<T extends AbstractFigure> implements Draw
 			a = new Oval(x,y,0,0);break;
 			default:
 			a = new Rect(x,y,0,0);
-		}			
+		}	*/
+		a = createFigure(x,y,0,0);		
 		//T a =  new T(x,y,0,0);
 		setNewRect(a);
 		addFigure(a);
 	}
 
+	public abstract AbstractFigure createFigure(int x,int y,int w,int h);
     
     protected void addFigure(AbstractFigure nR){
         view.getModel().addFigure(nR);

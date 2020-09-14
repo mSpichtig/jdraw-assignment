@@ -44,6 +44,9 @@ public class StdContext extends AbstractContext {
 		super(view, null);
 	}
 
+	private List<Figure> sel;
+	private boolean isCut =false;
+
 	/**
 	 * Constructs a standard context. The drawing tools available can be
 	 * parameterized using <code>toolFactories</code>.
@@ -95,10 +98,56 @@ public class StdContext extends AbstractContext {
 			}
 		);
 
+
+
 		editMenu.addSeparator();
-		editMenu.add("Cut").setEnabled(false);
-		editMenu.add("Copy").setEnabled(false);
-		editMenu.add("Paste").setEnabled(false);
+
+		
+		JMenuItem cut = new JMenuItem("Cut");
+		cut.setAccelerator(KeyStroke.getKeyStroke("control X"));
+		cut.addActionListener(e -> {
+			isCut = true;
+			setSel(getView().getSelection());
+			getView().getSelection().forEach(a -> getModel().removeFigure(a));
+			//getView().clearSelection();
+		});
+		editMenu.add(cut).setEnabled(true);
+		JMenuItem copy = new JMenuItem("Copy");
+		copy.setAccelerator(KeyStroke.getKeyStroke("control C"));
+		copy.addActionListener(e -> {setSel(getView().getSelection());});
+		editMenu.add(copy).setEnabled(true);
+		JMenuItem paste = new JMenuItem("Paste");
+		paste.setAccelerator(KeyStroke.getKeyStroke("control V"));
+		paste.addActionListener(e -> {
+			int dx =0,dy=0; 
+			//Idee wäre, dass wenn Maus ausserhalb Frame, dann kopiert sie es an stelle
+			//if (getBounds().contains(getMousePosition()) ){
+				
+				dx = getMousePosition().x-sel.get(0).getBounds().x;
+				dy = getMousePosition().y-sel.get(0).getBounds().y;
+			//}
+
+			if (isCut) {
+				for (Figure f : sel) {
+					f.move(dx, dy);
+					getModel().addFigure(f);
+					getView().addToSelection(f);
+				}
+				isCut = false;
+			}
+			else {
+				for (Figure f : sel) {
+					Figure g = f.clone();
+					g.move(dx, dy);
+					getModel().addFigure(g);
+					getView().addToSelection(g);
+				}
+			}
+
+			
+
+		});
+		editMenu.add(paste).setEnabled(true);
 
 		editMenu.addSeparator();
 		JMenuItem clear = new JMenuItem("Clear");
@@ -276,6 +325,14 @@ public class StdContext extends AbstractContext {
 			System.out.println("read file "
 					+ chooser.getSelectedFile().getName());
 		}
+	}
+
+	public List<Figure> getSel() {
+		return sel;
+	}
+
+	public void setSel(List<Figure> sel) {
+		this.sel = sel;
 	}
 
 }

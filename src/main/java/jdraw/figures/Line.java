@@ -8,6 +8,13 @@ package jdraw.figures;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
+import java.awt.Rectangle;
+import java.util.ArrayList;
+import java.util.List;
+
+import jdraw.framework.Figure;
+
+
 
 /*import java.awt.Rectangle;
 import java.util.List;
@@ -78,6 +85,27 @@ public class Line extends AbstractFigure/* implements Figure */ {
 			end.y += dy;
 		}
 	}
+
+	@Override
+	public List<Handle> getHandles() {
+		List<Handle> list = new ArrayList<Handle>();
+		if (or.x <= end.x && or.y <= end.y || or.x > end.x && or.y > end.y) {
+			list.add(Figure.Handle.NE);
+			list.add(Figure.Handle.SW);
+		}
+		else {
+			list.add(Figure.Handle.SE);
+			list.add(Figure.Handle.NW);
+		}
+		return list;//List.of(Handle.values());
+	}
+
+	@Override
+	public Line clone() {
+		Rectangle r = super.getRectangle();
+		return new Line((int) r.getX(),(int) r.getY(),(int)r.getWidth(),(int)r.getHeight());
+	}
+
 
 
 

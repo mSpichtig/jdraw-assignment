@@ -10,6 +10,12 @@ public class OvalTool2 extends AbstractDrawTool<Oval> {
     public OvalTool2(DrawContext context) {
         super(context);
         super.setType("Oval");
-    }    
+    }
+
+    @Override
+    public AbstractFigure createFigure(int x, int y, int w, int h) {
+        // TOD Auto-generated method stub
+        return new Oval(x,y,w,h);
+    }
     
 }
