@@ -60,7 +60,9 @@ public class Line extends AbstractFigure/* implements Figure */ {
 	 */
 	@Override
 	public void draw(Graphics g) {
-
+		if (or.equals(new Point(0,0)) && end.equals(new Point(0,0))) {
+			Rectangle r = super.getRectangle();
+			or.x=r.x;or.y=r.y;end.x=r.x+r.width;end.y=r.y+r.height;}
 		g.setColor(Color.RED);
 		g.drawLine(or.x, or.y, end.x, end.y);
 
@@ -89,12 +91,12 @@ public class Line extends AbstractFigure/* implements Figure */ {
 	public List<Handle> getHandles() {
 		List<Handle> list = new ArrayList<Handle>();
 		if (or.x <= end.x && or.y <= end.y || or.x > end.x && or.y > end.y) {
-			list.add(Figure.Handle.NE);
-			list.add(Figure.Handle.SW);
-		}
-		else {
 			list.add(Figure.Handle.SE);
 			list.add(Figure.Handle.NW);
+		}
+		else {
+			list.add(Figure.Handle.NE);
+			list.add(Figure.Handle.SW);
 		}
 		return list;//List.of(Handle.values());
 	}
