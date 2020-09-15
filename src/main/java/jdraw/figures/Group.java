@@ -30,7 +30,7 @@ public class Group implements Figure, jdraw.framework.FigureGroup {
     @Override
     public Group clone() {
         List<Figure> f = new ArrayList<>();
-        for (Figure ff : parts) f.add(ff);
+        for (Figure ff : parts) f.add(ff.clone());
         return new Group(f);
     }
 

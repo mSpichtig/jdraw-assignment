@@ -119,13 +119,13 @@ public class StdContext extends AbstractContext {
 		JMenuItem paste = new JMenuItem("Paste");
 		paste.setAccelerator(KeyStroke.getKeyStroke("control V"));
 		paste.addActionListener(e -> {
-			int dx =0,dy=0; 
+			int dx =5,dy=5; 
 			//Idee wäre, dass wenn Maus ausserhalb Frame, dann kopiert sie es an stelle
-			//if (getBounds().contains(getMousePosition()) ){
+			if (getMousePosition() != null ){
 				
 				dx = getMousePosition().x-sel.get(0).getBounds().x;
 				dy = getMousePosition().y-sel.get(0).getBounds().y;
-			//}
+			}
 
 			if (isCut) {
 				for (Figure f : sel) {

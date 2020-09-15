@@ -61,7 +61,6 @@ public class Line extends AbstractFigure/* implements Figure */ {
 	@Override
 	public void draw(Graphics g) {
 
-		g.setColor(Color.BLUE);
 		g.setColor(Color.RED);
 		g.drawLine(or.x, or.y, end.x, end.y);
 
@@ -103,7 +102,7 @@ public class Line extends AbstractFigure/* implements Figure */ {
 	@Override
 	public Line clone() {
 		Rectangle r = super.getRectangle();
-		return new Line((int) r.getX(),(int) r.getY(),(int)r.getWidth(),(int)r.getHeight());
+		return new Line(r.x,r.y,r.width,r.height);
 	}
 
 
