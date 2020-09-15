@@ -105,10 +105,10 @@ public class Line extends AbstractFigure/* implements Figure */ {
 	public Line clone() {
 		Rectangle r = super.getRectangle();
 		Line l = new Line(r.x,r.y,r.width,r.height);
-		l.or.x = r.x;
-		l.or.y = r.y;
-		l.end.x = r.x+r.width;
-		l.end.y = r.y+r.height;
+		l.or.x = this.or.x;
+		l.or.y = this.or.y;
+		l.end.x = this.end.x;
+		l.end.y = this.end.y;
 		return l;
 	}
 
