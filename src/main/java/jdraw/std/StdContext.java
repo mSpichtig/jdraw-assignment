@@ -121,10 +121,10 @@ public class StdContext extends AbstractContext {
 		paste.addActionListener(e -> {
 			int dx =5,dy=5; 
 			//Idee wäre, dass wenn Maus ausserhalb Frame, dann kopiert sie es an stelle
-			if (getMousePosition() != null ){
+			if (getMousePosition() != null ){				
 				
 				dx = getMousePosition().x-sel.get(0).getBounds().x;
-				dy = getMousePosition().y-sel.get(0).getBounds().y;
+				dy = getMousePosition().y-sel.get(0).getBounds().y-85;
 			}
 
 			if (isCut) {
