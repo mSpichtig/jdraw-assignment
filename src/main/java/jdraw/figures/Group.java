@@ -14,21 +14,30 @@ import jdraw.framework.FigureListener;
 
 public class Group implements Figure, jdraw.framework.FigureGroup {
 
+	// XXX parts würde ich private deklarieren, und wohl auch final.
     List<Figure> parts;
 
    /** Use the java.awt.Rectangle in order to save/reuse code. */
 	private final Rectangle rectangle;
+	// XXX dieses rectangle wird nur im Konstruktor und im setBounds gesetzt, aber NIE gelesen!
+	//     Die Bounds der Gruppe werden ja als "summe" der Bounds der Teilfiguren berechnet.
 
     /** list of listeners. */
     private final List<FigureListener> listeners = new CopyOnWriteArrayList<>();
+    // XXX für diese Listener-Geschichte wäre eine gemeinsame Basisklasse sinnvoll.
 
     public Group(List<Figure> parts) {
         this.parts = parts;
+        // XXX wieso diese initialisierung des Rechtecks? Ich würde das vielleicht gar nicht speichern
+        //     oder falls es als cache gespeichert wird, dann würde ich es wohl mit null initialisieren.
         this.rectangle = new Rectangle(0,0,0,0);
     }
 
     @Override
     public Group clone() {
+    	// XXX hier sieht man das Problem: Falls ich Group in einem anderen Paket erweitern wollte, dann
+    	//     kann ich dort kein clone mehr implementieren, denn ich kann in der Unterkalsse (in anderem Paket)
+    	//     nicht auf das Feld parts zugreifen.
         List<Figure> f = new ArrayList<>();
         for (Figure ff : parts) f.add(ff.clone());
         return new Group(f);
@@ -49,7 +58,7 @@ public class Group implements Figure, jdraw.framework.FigureGroup {
         for (Figure f : parts) {
             f.move(dx, dy);
         }
-
+        // XXX hier fehlt noch die Notifikation der registrierten Listener, zumindest wenn dx oder dy nicht null ist.
     }
 
     @Override
@@ -58,7 +67,7 @@ public class Group implements Figure, jdraw.framework.FigureGroup {
         boolean c = false;
         for (Figure f : parts) {
             if (f.contains(x, y))
-                c = true;
+                c = true; // XXX eigentlich könntest du die Schleife hier mit return true stoppen.
         }
         return c;
     }

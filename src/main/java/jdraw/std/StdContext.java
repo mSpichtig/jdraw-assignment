@@ -44,7 +44,7 @@ public class StdContext extends AbstractContext {
 		super(view, null);
 	}
 
-	private List<Figure> sel;
+	private List<Figure> sel; // XXX ich würde das wohl  "clipboard" nennen.
 	private boolean isCut =false;
 
 	/**
@@ -121,24 +121,28 @@ public class StdContext extends AbstractContext {
 		paste.addActionListener(e -> {
 			int dx =5,dy=5; 
 			//Idee wäre, dass wenn Maus ausserhalb Frame, dann kopiert sie es an stelle
+			// XXX Funktioniert auch, oder?
+			//     Aber wenn die Maus ausserhalb des Frames, dann wird die Figur immer an DIESELBE Stelle eingefügt.
 			if (getMousePosition() != null ){				
 				
 				dx = getMousePosition().x-sel.get(0).getBounds().x;
-				dy = getMousePosition().y-sel.get(0).getBounds().y-85;
+				dy = getMousePosition().y-sel.get(0).getBounds().y-85; // XXX wieso denn dann das -85?
 			}
 
+			// XXX ok, du hast das optimale bezüglich kopieren rausgeholt! D.h. es wird wirklich nur kopiert wenn nötig.
 			if (isCut) {
 				for (Figure f : sel) {
 					f.move(dx, dy);
 					getModel().addFigure(f);
-					getView().addToSelection(f);
+					getView().addToSelection(f); // XXX und davor würde ich eben noch die alte Selektion löschen.
 				}
 				isCut = false;
 			}
 			else {
 				for (Figure f : sel) {
 					Figure g = f.clone();
-					g.move(dx, dy);
+					g.move(dx, dy); // XXX das Original bleibt wo es war, d.h. wenn dx=dy=5 gilt, dann wird die Figur
+									//     immer um denselben Vektor verschoben.
 					getModel().addFigure(g);
 					getView().addToSelection(g);
 				}

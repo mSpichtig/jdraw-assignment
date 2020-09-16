@@ -42,6 +42,7 @@ public abstract class AbstractFigure implements Figure {
 	 */
 	@Override
     public abstract void draw(Graphics g);
+	// XXX die aus dem Interface geerbten Methoden müssen nicht wiederholt werden, ist eher unüblich.
     	
 	@Override
 	public void setBounds(Point origin, Point corner) {//Line anders
@@ -81,8 +82,15 @@ public abstract class AbstractFigure implements Figure {
 
 	@Override
 	public Figure clone() {
+		// XXX diese Implementierung gefällt mir nicht da sie null zurück gibt. Ok, von dieser Klasse kann es keine
+		//     Instanzen geben, aber falls jemand in der Unterklasse super.clone() aufruft dann hat er verloren.
+		//     Aber ich weiss, wenn Du die Methode weglässt, dann gibt es eine Fehlermeldung da die beiden von 
+		//     Figure und Object geerbten clone-Methoden nicht kompatibel sind.
+		//     Lösung: Definiere hier eine abstrakte clone Methode (und definiere so die Schnittstelle von clone).
+		//     Ich habe unten angegeben wie das aussehen müsste.
 		return null;	
 	}
+//	public abstract Figure clone() ;
 	
 	protected void propagateFigureEvent() {
 		FigureEvent fe = new FigureEvent(this);

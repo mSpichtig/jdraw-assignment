@@ -14,8 +14,7 @@ public class OvalTool2 extends AbstractDrawTool<Oval> {
 
     @Override
     public AbstractFigure createFigure(int x, int y, int w, int h) {
-        // TOD Auto-generated method stub
         return new Oval(x,y,w,h);
     }
-    
+
 }

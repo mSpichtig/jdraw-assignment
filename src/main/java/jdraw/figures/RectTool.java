@@ -16,8 +16,6 @@ import jdraw.framework.DrawContext;
  */
 public class RectTool extends AbstractDrawTool<Rect>/*implements DrawTool*/ {
   
-	
-
 	/**
 	 * Create a new rectangle tool for the given context.
 	 * @param context a context to use this tool in.
@@ -32,10 +30,7 @@ public class RectTool extends AbstractDrawTool<Rect>/*implements DrawTool*/ {
 
 	@Override
 	public AbstractFigure createFigure(int x, int y, int w, int h) {
-		// TOD Auto-generated method stub
 		return new Rect(x, y, w, h);
 	}
-
-	
 
 }

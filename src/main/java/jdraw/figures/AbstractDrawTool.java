@@ -47,7 +47,8 @@ public abstract class AbstractDrawTool<T extends AbstractFigure> implements Draw
 	 * to the new rectangle that is inserted.
 	 */
     private AbstractFigure newRect = null;
-    private String type;
+    private String type; // XXX den Typ des Tools würde ich final setzen (und dann auch mit dem Konstruktor übergeben und nicht über eine Setter-Methode,
+    				     //     denn es macht keinen Sinn beim Line-Tool den Typ-Namen plötzlich auf Rect zu ändern.
 
 	/**
 	 * Temporary variable.
@@ -169,6 +170,8 @@ public abstract class AbstractDrawTool<T extends AbstractFigure> implements Draw
 	
 	@Override
 	public Icon getIcon() {
+		// XXX ok. Ich würde wohl mit dem type über den Konstruktor auch den Image-Namen übergeben, das gibt etwas
+		//     Flexibilität was den Dateinamen angeht.
 		return new ImageIcon(getClass().getResource(IMAGES + type.toLowerCase()+".png"));
 	}
 
@@ -177,6 +180,9 @@ public abstract class AbstractDrawTool<T extends AbstractFigure> implements Draw
 		return type;
 	}
 
+	// XXX da kann man sich fragen wer das aufrufen möchte. Aktuell wird die Methode getType nicht verwendet.
+	//     Unterklassen kennen den Typ und könnten diesen auch in ihrem Konstruktor speichern wenn sie diese Info benötigen.
+	//     Noch besser: Sie können getName() aufrufen!
     public String getType() {
         return type;
     }
@@ -189,14 +195,21 @@ public abstract class AbstractDrawTool<T extends AbstractFigure> implements Draw
         return newRect;
     }
 
+    // XXX diese Methode ist schlecht, denn sie zerstört die Invariante die Du in dieser Klasse etablierst,
+    //     d.h. das feld newRect (sollte wohl newFigure heissen) ist private und soll nur im mouseDown
+    //     gesetzt werden. Aber mit der Methode setNewRect kann diese Eigenschaft von Aussen zerstört werden.
     public void setNewRect(AbstractFigure newRect) {
         this.newRect = newRect;
     }
 
+    // XXX und weil anchor privat ist und nur hier während dem Aufziehen der Figur verwendet wird kann man
+    //     sich fragen ob es sinnvoll ist, dieses Feld nach aussen sichtbar zu machen, insbesondere ist 
+    //     Point nicht immutable, d.h. der Aufrufer könnte die Felder ändern.
     public Point getAnchor() {
         return anchor;
     }
 
+    // XXX dasselbe gilt für das setAnchor
     public void setAnchor(Point anchor) {
         this.anchor = anchor;
     }

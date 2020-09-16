@@ -51,6 +51,7 @@ public class Line extends AbstractFigure/* implements Figure */ {
 	 */
 	public Line(int x, int y, int w, int h) {
 		super(x, y, w, h);
+		// XXX hier müssten or und end gesetzt werden.
 	}
 
 	/**
@@ -61,8 +62,10 @@ public class Line extends AbstractFigure/* implements Figure */ {
 	@Override
 	public void draw(Graphics g) {
 		if (or.equals(new Point(0,0)) && end.equals(new Point(0,0))) {
+			// XXX dieser Code sollte bereits im Konstrukto stehen.
 			Rectangle r = super.getRectangle();
-			or.x=r.x;or.y=r.y;end.x=r.x+r.width;end.y=r.y+r.height;}
+			or.x=r.x;or.y=r.y;end.x=r.x+r.width;end.y=r.y+r.height;
+		}
 		g.setColor(Color.RED);
 		g.drawLine(or.x, or.y, end.x, end.y);
 

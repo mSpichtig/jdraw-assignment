@@ -57,10 +57,16 @@ public class Rect extends AbstractFigure/* implements Figure */ {
 
 	@Override
 	public Rect clone() {
+		// XXX diese Implementierung entspricht nicht dem Standard, d.h. es könnte Probleme geben in Unterklassen
+		//     (ok, nicht bei Dir da hier keine privaten Felder gesetzt sind. Die clone-Normalform wäre
+		//     return new Rect(this);
+		//     und Implementierung des copy-Konstruktors.
+		//
+		//     Und dann müsste man sich noch fragen, was man mit den Daten der Basisklasse (AbstractFigure)
+		//     macht, ich denke da an die Liste der Listener. Diese werden bei Dir jetzt nicht übernommen
+		//     (wobei: das ist aus meiner Sicht das richtige Verhalten).
 		Rectangle r = super.getRectangle();
 		return new Rect((int) r.getX(),(int) r.getY(),(int)r.getWidth(),(int)r.getHeight());
 	}
-
-
 
 }
